@@ -1,0 +1,5 @@
+
+<form>
+    <input type="text" name="next-todo" [(ngModel)]="nextTodo">
+    <button (click)="todos.addTodo(nextTodo); nextTodo=''" ng-enabled="!nextTodo.trim()">Add</button>
+</form>
