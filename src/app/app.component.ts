@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
-import { TodoService } from './todo.service';
-
-
-export class TodoItem {
-  text : string;
-  completed : boolean;
-}
+import { TodoService, TodoItem } from './todo.service';
 
 @Component({
   selector: 'app-root',
@@ -16,22 +11,33 @@ export class TodoItem {
   providers: [TodoService]
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
-  title : string = 'todos';
-  //nextToDo : string = '';
-  //nextTodo : Subject<string>;
-  //obs : Observable<any>;
+  title = 'todos';
+  todos: Observable< TodoItem[] >;
 
-  constructor(private todos: TodoService) { }
+  constructor(private todoService: TodoService) {  }
 
-  ngOnInit() : void {
-    //this.nextTodo = new Subject();
-    //this.obs = this.nextTodo.asObservable();
+  ngOnInit(): void {
+
+    this.todos = this.todoService.todos;
+
   }
 
-  //addTodo(text : string){
-  //  this.nextTodo.next(text);
-  //}
+  showCompleted() {
+   this.todoService.getCompleted();
+  }
+
+  showAll() {
+    this.todoService.getAll();
+  }
+
+  removeCompleted() {
+    this.todoService.removeCompleted();
+  }
+
+  setTodoState(text, value) {
+    this.todoService.setState(text, value);
+  }
 
 }

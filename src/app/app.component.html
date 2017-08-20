@@ -2,16 +2,18 @@
     {{title}}
 </h1>
 
-<form>
-    <input type="text" name="next-todo" [(ngModel)]="nextTodo">
-    <button (click)="todos.addTodo(nextTodo); nextTodo=''" ng-enabled="!nextTodo.trim()">Add</button>
-</form>
+<next-todo> </next-todo>
 
 <ul>
-  <li *ngFor="let todo of todos.getList()">
-    <input type="checkbox" [(ngModel)]="todo.completed">
+  <li *ngFor="let todo of todos | async">
+    <input type="checkbox" [checked]="todo.completed" [value]="true" (click)="setTodoState(todo.text, checked.checked && checked.value)" #checked>
     {{todo.text}}
-  </li>
+  </li>   
 </ul>
 
-<button (click)="todos.removeCompleted();">Remove Completed</button>
+<button type="button" (click)="removeCompleted();" #remove>Remove Completed</button>
+<!-- 
+<button type="button" (click)="showCompleted(); showall.disabled='false'" #showcompleted>Show Completed</button>
+<button type="button" (click)="showAll(); showcompleted.disabled='false'"  [disabled]=true #showall>Show All</button>
+-->
+
